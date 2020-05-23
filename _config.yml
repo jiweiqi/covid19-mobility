@@ -1,5 +1,5 @@
 title: Project Mobility and Fuel Demand Under COVID-19
-description: We take the pandemic data from COVID-19 epidemiology model to predict the impact of COVID-19 on transportation mobility and fuel demand in the US
+description: We use COVID-19 epidemiology model to predict the impact of COVID-19 on US mobility and fuel demand
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-cayman
