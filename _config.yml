@@ -1,5 +1,5 @@
 title: Project US Mobility and Fuel Demand Under COVID-19
 description: We connect the COVID-19 statistics with personal mobility changes and project future mobility and fuel demand using COVID-19 epidemiology model
-show_downloads: false
+show_downloads: true
 google_analytics: UA-158804899-2
 theme: jekyll-theme-cayman
