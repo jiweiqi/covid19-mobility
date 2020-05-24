@@ -10,6 +10,8 @@ We then take the projected COVID-19 infection case numbers from the epidemiology
 
 Looking ahead, there are significant uncertainties in the COVID-19 projections and Fuel Demand projections depends on whether people will continue social distancing in the reopening phases. In the reference scenario, it is assumed that people will still largely keep social distancing and states will re-impose stay home order if there is a second wave. Therefore, we see a flatten projection curve. In the optimistic cases, people will keep social distancing even the stay-home-order is eased. In the pessimistic scenario, the fuel demand could face a second wave of droping due to the second wave of COVID-10 pandemic.
 
+**Projection made on May 17**
+
 <p align="center">
  {% include iframe.html %}
 </p>
