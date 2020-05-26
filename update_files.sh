@@ -1,0 +1,2 @@
+wget -q https://raw.githubusercontent.com/youyanggu/covid19_projections/gh-pages/us-home1.html -O us-home1.html
+wget -q https://raw.githubusercontent.com/youyanggu/covid19_projections/gh-pages/us-home2.html -O us-home2.html
