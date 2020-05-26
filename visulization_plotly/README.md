@@ -1,6 +1,6 @@
 # Data Visualization Development Guide
 
-This folder contains the source code for making interactive plots in the weibsite covid19-mobility.com. 
+This folder contains the source code for making interactive plots in the weibsite [covid19-mobility.com](covid19-mobility.com). 
 
 We use plotly to make the plots and generate offline html code, which can be directly integrated into the website.
 
@@ -11,7 +11,7 @@ If you want to know how the website is developed, you can go to the gh-pages bra
 # Visualization to be done
 
 + Mobility projection curve by state (four curves in total)
-    - contains projected/historical Aplle mobility
+    - contains projected/historical Apple mobility
     - contains projected/historical Google mobility
 
-    Then we can make a list of US states at https://covid19-mobility.com/projection/. Click on the state name will direct to to the state's projection curve.
+    Then we can make a list of US states at https://covid19-mobility.com/projection/. Click on the state name will direct you to the state's projection curve.
