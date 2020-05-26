@@ -15,5 +15,3 @@ If you want to know how the website is developed, you can go to the gh-pages bra
     - contains projected/historical Google mobility
 
     Then we can make a list of US states at https://covid19-mobility.com/projection/. Click on the state name will direct to to the state's projection curve.
-
-    It is not good to put all plots into one page since the plots contains a large amount of data.
