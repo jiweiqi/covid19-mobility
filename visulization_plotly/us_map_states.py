@@ -8,7 +8,13 @@ import numpy as np
 
 # https://plotly.com/python/getting-started-with-chart-studio/
 
-df = pd.read_excel('../mobility_projections/Mobility_State_2020-05-21mean.xlsx')
+# df = pd.read_excel('../mobility_projections/Mobility_State_2020-05-21mean.xlsx')
+
+data_dir = '../fuel_demand_projections/'
+PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-05-26.npy',
+                     allow_pickle='TRUE').item()
+
+df = PODA_Model['Mobility_State_Level_Projection_mean']
 
 year = 2020
 
