@@ -10,13 +10,13 @@ import numpy as np
 
 data_dir = '../fuel_demand_projections/'
 
-df = pd.read_excel(data_dir+'fueldemand_2020-05-17.xlsx')
+# df = pd.read_excel(data_dir+'fueldemand_2020-05-17.xlsx')
 
-df3 = pd.read_excel(data_dir+'Fuel_Demand_3_Scenarios_2020-05-17.xlsx')
+# df3 = pd.read_excel(data_dir+'Fuel_Demand_3_Scenarios_2020-05-17.xlsx')
 
 # df_EIA = pd.read_excel(data_dir+'NoPandemic_EIA2020.xlsx')
 
-PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-05-26.npy',
+PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-05-28.npy',
                      allow_pickle='TRUE').item()
 
 fig = go.Figure()
