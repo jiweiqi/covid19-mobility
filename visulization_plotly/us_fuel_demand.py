@@ -8,25 +8,32 @@ import numpy as np
 
 # https://plotly.com/python/getting-started-with-chart-studio/
 
-df = pd.read_excel('../fueldemand_2020-05-17.xlsx')
+data_dir = '../fuel_demand_projections/'
 
-df3 = pd.read_excel('../Fuel_Demand_3_Scenarios_2020-05-17.xlsx')
+df = pd.read_excel(data_dir+'fueldemand_2020-05-17.xlsx')
 
-df_EIA = pd.read_excel('../NoPandemic_EIA2020.xlsx')
+df3 = pd.read_excel(data_dir+'Fuel_Demand_3_Scenarios_2020-05-17.xlsx')
+
+# df_EIA = pd.read_excel(data_dir+'NoPandemic_EIA2020.xlsx')
+
+PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-05-26.npy',
+                     allow_pickle='TRUE').item()
 
 fig = go.Figure()
 
 color_i = 'rgb(36,140,140)'
 
-fig.add_trace(go.Scatter(x=df3['Date mean'],
-                         y=np.int64(df3['Apple Fuel Demand upper']*1e3), 
+df_now = PODA_Model['Fuel_Demand_Projection_upper']
+fig.add_trace(go.Scatter(x=df_now['Date'],
+                         y=np.int64(df_now['Apple Fuel Demand Predict']*1e3), 
                          mode=None,
                          name='lower range',
                          line=dict(color=color_i, width=0.0,
                                    dash=None)))
 
-fig.add_trace(go.Scatter(x=df3['Date mean'],
-                         y=np.int64(df3['Apple Fuel Demand mean']*1e3), 
+df_now = PODA_Model['Fuel_Demand_Projection_mean']
+fig.add_trace(go.Scatter(x=df_now['Date'],
+                         y=np.int64(df_now['Apple Fuel Demand Predict']*1e3), 
                          name='mean',
                          mode='lines',
                          fill='tonexty', # fill area between trace0 and trace1
@@ -35,8 +42,9 @@ fig.add_trace(go.Scatter(x=df3['Date mean'],
                          line=dict(color=color_i, width=2,
                                    dash='dash')))
 
-fig.add_trace(go.Scatter(x=df3['Date mean'],
-                         y=np.int64(df3['Apple Fuel Demand lower']*1e3), 
+df_now = PODA_Model['Fuel_Demand_Projection_lower']
+fig.add_trace(go.Scatter(x=df_now['Date'],
+                         y=np.int64(df_now['Apple Fuel Demand Predict']*1e3), 
                          fill='tonexty',
                          # fillcolor=color_i,
                          opacity=0.2,
@@ -45,15 +53,18 @@ fig.add_trace(go.Scatter(x=df3['Date mean'],
                                    dash=None)))
 
 from datetime import timedelta
-fig.add_trace(go.Scatter(x=df_EIA['Date'][9:19] - timedelta(days=7),
-                         y=np.int64(df_EIA['Actual 2020'][9:19]*1e3), 
+df_EIA = PODA_Model['Fuel_Demand_EIA'].iloc[2:]
+fig.add_trace(go.Scatter(x=df_EIA.index - timedelta(days=7),
+                         y=np.int64(df_EIA['Gasoline']*1e3), 
                          name='EIA actual',
                          mode='lines',
-                         line=dict(color='rgb(27,158,119)', width=2,
+                         line=dict(color='darkred', 
+                                   width=2,
+                                   # color='rgb(27,158,119)',
                                    dash='solid')))
 
 
-fig.update_layout(title={'text': '<b>US Motor gasoline demand</b>',
+fig.update_layout(title={'text': '<b>US Motor Gasoline Demand</b>',
                          'y': 0.9,
                          'x': 0.5,
                          'xanchor': 'center',

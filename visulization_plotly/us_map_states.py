@@ -8,7 +8,7 @@ import numpy as np
 
 # https://plotly.com/python/getting-started-with-chart-studio/
 
-df = pd.read_excel('../Mobility_State_2020-05-21mean.xlsx')
+df = pd.read_excel('../mobility_projections/Mobility_State_2020-05-21mean.xlsx')
 
 year = 2020
 
@@ -42,11 +42,14 @@ for date in df['Date'].unique():
     
 steps = []
 for i in range(len(data_slider)):
-    step = dict(method='restyle',
-                args=['visible', [False] * len(data_slider)],
-                label=np.datetime_as_string(df['Date'].unique()[i], unit='D'))
-    step['args'][1][i] = True
-    steps.append(step)
+    
+    if i%15 == 0:
+    
+        step = dict(method='restyle',
+                    args=['visible', [False] * len(data_slider)],
+                    label=np.datetime_as_string(df['Date'].unique()[i], unit='D'))
+        step['args'][1][i] = True
+        steps.append(step)
 
 sliders = [dict(active=0, pad={"t": 1}, steps=steps)]
 
