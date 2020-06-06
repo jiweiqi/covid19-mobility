@@ -11,7 +11,7 @@ import numpy as np
 # df = pd.read_excel('../mobility_projections/Mobility_State_2020-05-21mean.xlsx')
 
 data_dir = '../fuel_demand_projections/'
-PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-05-26.npy',
+PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-06-05.npy',
                      allow_pickle='TRUE').item()
 
 df = PODA_Model['Mobility_State_Level_Projection_mean']

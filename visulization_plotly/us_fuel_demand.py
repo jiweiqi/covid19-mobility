@@ -16,7 +16,7 @@ data_dir = '../fuel_demand_projections/'
 
 # df_EIA = pd.read_excel(data_dir+'NoPandemic_EIA2020.xlsx')
 
-PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-05-28.npy',
+PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-06-05.npy',
                      allow_pickle='TRUE').item()
 
 fig = go.Figure()
@@ -24,16 +24,16 @@ fig = go.Figure()
 color_i = 'rgb(36,140,140)'
 
 df_now = PODA_Model['Fuel_Demand_Projection_upper']
-fig.add_trace(go.Scatter(x=df_now['Date'],
-                         y=np.int64(df_now['Apple Fuel Demand Predict']*1e3), 
+fig.add_trace(go.Scatter(x=df_now.index,
+                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3), 
                          mode=None,
                          name='lower range',
                          line=dict(color=color_i, width=0.0,
                                    dash=None)))
 
 df_now = PODA_Model['Fuel_Demand_Projection_mean']
-fig.add_trace(go.Scatter(x=df_now['Date'],
-                         y=np.int64(df_now['Apple Fuel Demand Predict']*1e3), 
+fig.add_trace(go.Scatter(x=df_now.index,
+                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3), 
                          name='mean',
                          mode='lines',
                          fill='tonexty', # fill area between trace0 and trace1
@@ -43,8 +43,8 @@ fig.add_trace(go.Scatter(x=df_now['Date'],
                                    dash='dash')))
 
 df_now = PODA_Model['Fuel_Demand_Projection_lower']
-fig.add_trace(go.Scatter(x=df_now['Date'],
-                         y=np.int64(df_now['Apple Fuel Demand Predict']*1e3), 
+fig.add_trace(go.Scatter(x=df_now.index,
+                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3), 
                          fill='tonexty',
                          # fillcolor=color_i,
                          opacity=0.2,
@@ -54,7 +54,7 @@ fig.add_trace(go.Scatter(x=df_now['Date'],
 
 from datetime import timedelta
 df_EIA = PODA_Model['Fuel_Demand_EIA'].iloc[2:]
-fig.add_trace(go.Scatter(x=df_EIA.index - timedelta(days=7),
+fig.add_trace(go.Scatter(x=df_EIA.index - timedelta(days=4),
                          y=np.int64(df_EIA['Gasoline']*1e3), 
                          name='EIA actual',
                          mode='lines',
