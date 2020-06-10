@@ -3,7 +3,7 @@ import plotly
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
-
+from datetime import timedelta
 import numpy as np
 
 # https://plotly.com/python/getting-started-with-chart-studio/
@@ -21,30 +21,19 @@ PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-06-05.npy',
 
 fig = go.Figure()
 
-color_i = 'rgb(36,140,140)'
+color_i = 'rgb(142, 212, 212)'
 
 df_now = PODA_Model['Fuel_Demand_Projection_upper']
 fig.add_trace(go.Scatter(x=df_now.index,
-                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3), 
+                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3),
                          mode=None,
                          name='lower range',
                          line=dict(color=color_i, width=0.0,
                                    dash=None)))
 
-df_now = PODA_Model['Fuel_Demand_Projection_mean']
-fig.add_trace(go.Scatter(x=df_now.index,
-                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3), 
-                         name='mean',
-                         mode='lines',
-                         fill='tonexty', # fill area between trace0 and trace1
-                         # fillcolor='rgba(255, 0, 0, 0.1)',
-                         
-                         line=dict(color=color_i, width=2,
-                                   dash='dash')))
-
 df_now = PODA_Model['Fuel_Demand_Projection_lower']
 fig.add_trace(go.Scatter(x=df_now.index,
-                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3), 
+                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3),
                          fill='tonexty',
                          # fillcolor=color_i,
                          opacity=0.2,
@@ -52,13 +41,24 @@ fig.add_trace(go.Scatter(x=df_now.index,
                          line=dict(color=color_i, width=0.0,
                                    dash=None)))
 
-from datetime import timedelta
+df_now = PODA_Model['Fuel_Demand_Projection_mean']
+fig.add_trace(go.Scatter(x=df_now.index,
+                         y=np.int64(df_now['Google Fuel Demand Predict']*1e3),
+                         name='mean',
+                         mode=None,
+                         #                          fill='tonexty', # fill area between trace0 and trace1
+                         # fillcolor='rgba(255, 0, 0, 0.1)',
+
+                         line=dict(color='rgb(57, 163, 163)', width=2,
+                                   dash='dot')))
+
+
 df_EIA = PODA_Model['Fuel_Demand_EIA'].iloc[2:]
 fig.add_trace(go.Scatter(x=df_EIA.index - timedelta(days=4),
-                         y=np.int64(df_EIA['Gasoline']*1e3), 
+                         y=np.int64(df_EIA['Gasoline']*1e3),
                          name='EIA actual',
                          mode='lines',
-                         line=dict(color='darkred', 
+                         line=dict(color='darkred',
                                    width=2,
                                    # color='rgb(27,158,119)',
                                    dash='solid')))
@@ -114,6 +114,20 @@ fig.update_layout(
         # pad=4
     )
 )
+
+fig.add_shape(
+    # Line Vertical
+    dict(
+        type="line",
+        x0='2020-06-05',
+        y0=0,
+        x1='2020-06-05',
+        y1=10**7,
+        line=dict(
+            color='rgb(65, 65, 69)',
+            width=0.7
+        )
+    ))
 
 fig.show()
 
