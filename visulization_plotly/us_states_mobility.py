@@ -16,15 +16,15 @@ PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_'+today+'.npy',
 
 color_i = 'rgb(142, 212, 212)'
 
-df_upper = PODA_Model['Mobility_State_Level_Projection_upper']
-df_mean = PODA_Model['Mobility_State_Level_Projection_mean']
-df_lower = PODA_Model['Mobility_State_Level_Projection_lower']
+df_upper = PODA_Model['Google_Apple_Mobility_Projection_upper']
+df_mean = PODA_Model['Google_Apple_Mobility_Projection_mean']
+df_lower = PODA_Model['Google_Apple_Mobility_Projection_lower']
 
 # df_label = PODA_Model['Data_for_Mobility_Projection_mean']
 
 for i_state, state_name in enumerate(df_mean['State Name'].unique()):
 
-    if i_state > 100:
+    if i_state > 1:
         break
 
     print("ploting "+state_name + ' ' + str(i_state) + '/50')
@@ -33,13 +33,16 @@ for i_state, state_name in enumerate(df_mean['State Name'].unique()):
     df_state_mean = df_mean[(df_mean['State Name'] == state_name)]
     df_state_lower = df_lower[(df_lower['State Name'] == state_name)]
 
-    for key in ['Google State Mobility Predict']:
+    for i_key, key in enumerate(df_mean.keys()):
+
+        if i_key > 3:
+            break
 
         fig = go.Figure()
 
         df_now = df_state_lower
-        fig.add_trace(go.Scatter(x=df_now['Date'],
-                                 y=np.int64(df_now[key])-100,
+        fig.add_trace(go.Scatter(x=df_now['date'],
+                                 y=np.int64(df_now[key]),
                                  mode=None,
                                  name='lower',
                                  line=dict(color=color_i,
@@ -47,8 +50,8 @@ for i_state, state_name in enumerate(df_mean['State Name'].unique()):
                                            dash=None)))
 
         df_now = df_state_upper
-        fig.add_trace(go.Scatter(x=df_now['Date'],
-                                 y=np.int64(df_now[key])-100,
+        fig.add_trace(go.Scatter(x=df_now['date'],
+                                 y=np.int64(df_now[key]),
                                  fill='tonexty',
                                  opacity=0.2,
                                  name='upper',
@@ -57,8 +60,8 @@ for i_state, state_name in enumerate(df_mean['State Name'].unique()):
                                            dash=None)))
 
         df_now = df_state_mean
-        fig.add_trace(go.Scatter(x=df_now['Date'],
-                                 y=np.int64(df_now[key])-100,
+        fig.add_trace(go.Scatter(x=df_now['date'],
+                                 y=np.int64(df_now[key]),
                                  name='mean',
                                  mode=None,
                                  line=dict(color='rgb(57, 163, 163)',
@@ -89,7 +92,7 @@ for i_state, state_name in enumerate(df_mean['State Name'].unique()):
                          tickfont=dict(size=14),
                          titlefont=dict(size=16))
 
-        fig.update_yaxes(title_text='Fuel Demand Index',
+        fig.update_yaxes(title_text=key,
                          tickfont=dict(size=12),
                          titlefont=dict(size=14))
 
@@ -125,7 +128,7 @@ for i_state, state_name in enumerate(df_mean['State Name'].unique()):
         # fig.show()
 
         pio.write_html(fig,
-                       file='html/us_'+state_name.replace(" ", "_")+'_fuel_demand.html',
+                       file='html/us_'+state_name.replace(" ", "_")+'_mobility_'+key.replace(" ", "_")+'.html',
                        config={'displayModeBar': False},
                        auto_open=True,
                        include_plotlyjs='cdn',
