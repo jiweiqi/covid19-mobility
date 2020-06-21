@@ -1,10 +1,9 @@
+import numpy as np
 import pandas as pd
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
-
-import numpy as np
 
 data_dir = '../fuel_demand_projections/'
 PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-06-17.npy',

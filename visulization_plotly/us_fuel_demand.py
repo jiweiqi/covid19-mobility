@@ -1,10 +1,11 @@
+from datetime import timedelta
+
+import numpy as np
 import pandas as pd
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
-from datetime import timedelta
-import numpy as np
 
 data_dir = '../fuel_demand_projections/'
 
