@@ -4,13 +4,15 @@ During this COVID-19 pandemic, we have seen a significant drop in mobility and f
 
 This repo hosts the source code and raw projection of the Pandemic Oil Demand Analysis (PODA) model.
 
-* PODA Model source code: `/PODA_Model_Code` (Coming soon)
+* PODA Model source code: `/PODA_Model_Code`
 
 * raw projection data: `/fuel_demand_projections`
 
+* Code for producing the interactive visulization in the website: `/visulization_plotly`
+
 You can find interactive visulizations of the projection and model details at [covid19-mobility.com](https://covid19-mobility.com/).
 
-This study used resources at the National Transportation Research Center (NTRC) at Oak Ridge National Laboratory (ORNL), and the Energy Systems Center at Argonne National Laboratory (ANL), and Massachusetts of Institute of Technology (MIT). The authors are solely responsible for the views expressed in this study. For more details about our team, please visit [teem.ornl.gov/poda.shtml](https://teem.ornl.gov/poda.shtml).
+This study used resources at the National Transportation Research Center (NTRC) at Oak Ridge National Laboratory (ORNL), the Energy Systems Center at Argonne National Laboratory (ANL), and Massachusetts of Institute of Technology (MIT). The authors are solely responsible for the views expressed in this study. For more details about our team, please visit [teem.ornl.gov/poda.shtml](https://teem.ornl.gov/poda.shtml).
 
 We would like to thanks the helps from
 
