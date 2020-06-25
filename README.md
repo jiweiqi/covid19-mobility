@@ -12,7 +12,9 @@ This repo hosts the source code and raw projection of the Pandemic Oil Demand An
 
 You can find interactive visulizations of the projection and model details at [covid19-mobility.com](https://covid19-mobility.com/).
 
-This study used resources at National Transportation Research Center at Oak Ridge National Laboratory, Aramco Services Company: Aramco Research Center – Detroit, Massachusetts of Institute of Technology (MIT), Michigan Department of Transportation, and Energy Systems Division at Argonne National Laboratory, and . The authors are solely responsible for the views expressed in this study. For more details about our team, please visit [teem.ornl.gov/poda.shtml](https://teem.ornl.gov/poda.shtml).
+This study used resources at National Transportation Research Center at Oak Ridge National Laboratory, Aramco Services Company: Aramco Research Center – Detroit, Massachusetts of Institute of Technology (MIT), Michigan Department of Transportation, and Energy Systems Division at Argonne National Laboratory. The authors are solely responsible for the views expressed in this study. 
+
+Yo can also visit our project website at [teem.ornl.gov/poda.shtml](https://teem.ornl.gov/poda.shtml).
 
 We would like to thanks the helps from
 
