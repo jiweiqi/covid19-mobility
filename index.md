@@ -27,3 +27,18 @@ Our model is called Pandemic Oil Demand Analysis (PODA) model. The PODA model ai
 As the figure below shows, the PODA model contains two major modules. The first module, the Mobility Dynamic Index Forecast module, identifies the changes in travel mobility caused by the evolution of COVID-19 pandemic and government orders and projects the changes in travel mobility indices relative to the normal level in the U.S. Notably, the change in travel mobility, which affects the frequency of human contact or the level of social distancing, can reciprocally impact the evolution of the pandemic to some extent, as the dashed line shows in the following figure. However, to simplify the model, we ignore the dynamic feedback in the current PODA model version. The second major PODA module, the Motor Gasoline Demand Estimation module, estimates vehicle miles traveled on pandemic days while considering the dynamic indices of travel mobility and quantifies motor gasoline demands by coupling the gasoline demands and vehicle miles traveled. The COVID-19 pandemic projections in this study are supported by the [YYG model](https://covid19-projections.com), and the mobility-related information is based on the public data released by [Google](https://www.google.com/covid19/mobility/) and [Apple](https://www.apple.com/covid19/mobility).
 
 ![Image]({{ site.url }}/assets/PODA_Model.png)
+
+
+## Our Team
+
+   * [Shiqi Ou](https://www.linkedin.com/in/shiqi-shawn-ou-9137a149/) (Energy and Transportation Science Division, Oak Ridge National Laboratory)
+   * Xin He (Aramco Services Company) 
+   * [Weiqi Ji](https://deng.mit.edu/people.html) (Massachusetts Institute of Technology) 
+   * Wei Chen (Michigan Department of Transportation) 
+   * Lang Sui (Aramco Services Company) 
+   * Yu Gan (Energy Systems Division, Argonne National Laboratory) 
+   * Zifeng Lu (Energy Systems Division, Argonne National Laboratory) 
+   * Zhenhong Lin (Energy and Transportation Science Division, Oak Ridge National Laboratory) 
+   * [Sili Deng](https://deng.mit.edu/people.html) (Massachusetts Institute of Technology) 
+   * Steven Przesmitzki (Aramco Services Company) 
+   * Jessey Bouchard (Aramco Services Company)
