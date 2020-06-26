@@ -20,13 +20,13 @@ You can find interactive visulizations of the projection and model details at [c
 
    * Shiqi Ou (Energy and Transportation Science Division, Oak Ridge National Laboratory), 
    * Xin He (Aramco Services Company), 
-   * Weiqi Ji (Massachusetts Institute of Technology), 
+   * [Weiqi Ji](https://deng.mit.edu/people.html) (Massachusetts Institute of Technology), 
    * Wei Chen (Michigan Department of Transportation), 
    * Lang Sui (Aramco Services Company), 
    * Yu Gan (Energy Systems Division, Argonne National Laboratory), 
    * Zifeng Lu (Energy Systems Division, Argonne National Laboratory), 
    * Zhenhong Lin (Energy and Transportation Science Division, Oak Ridge National Laboratory), 
-   * Sili Deng (Massachusetts Institute of Technology), 
+   * [Sili Deng](https://deng.mit.edu/people.html) (Massachusetts Institute of Technology), 
    * Steven Przesmitzki (Aramco Services Company), 
    * Jessey Bouchard (Aramco Services Company)
    
