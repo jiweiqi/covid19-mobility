@@ -20,7 +20,7 @@ Noted that EIA data was shifted 7 day to represent the delay between actual fuel
  {% include iframe_YYG_US.html %}
 </p>
 
-## Model structure
+## Model Structure
 
 Our model is called Pandemic Oil Demand Analysis (PODA) model. The PODA model aims to project the motor gasoline demand for the medium-term—three months into the future—based on the evolution of the COVID-19 pandemic and the resulting changes in travel mobility. Through connecting the on-going changes in personal travel patterns and evolution of the COVID-19 pandemic, the PODA model offers an understanding of gasoline demand which can be beneficial to economic and transportation energy planning and policy discussions.
 
