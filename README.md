@@ -18,7 +18,7 @@ You can find interactive visulizations of the projection and model details at [c
 
 ## Our Team
 
-   * Shiqi Ou (Energy and Transportation Science Division, Oak Ridge National Laboratory), 
+   * [Shiqi Ou](https://www.linkedin.com/in/xin-he-11035b14/) (Energy and Transportation Science Division, Oak Ridge National Laboratory), 
    * Xin He (Aramco Services Company), 
    * [Weiqi Ji](https://deng.mit.edu/people.html) (Massachusetts Institute of Technology), 
    * Wei Chen (Michigan Department of Transportation), 
