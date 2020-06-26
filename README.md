@@ -36,5 +36,5 @@ The authors are solely responsible for the views expressed in this study.
 
 We would like to thanks the helps from
 
-* Mr. Shihao Wen on the data visulization of project website
-* Mr. Youyang Gu on the COVID-19 pandemic model
+* [Shihao Wen](https://www.linkedin.com/in/shihao-wen/) on the data visulization of project website
+* [Youyang Gu](https://www.linkedin.com/in/youyanggu/) on the COVID-19 pandemic model
