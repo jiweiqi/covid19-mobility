@@ -20,7 +20,7 @@ You can find interactive visulizations of the projection and model details at [c
 
    * [Shiqi Ou](https://www.linkedin.com/in/xin-he-11035b14/) (Energy and Transportation Science Division, Oak Ridge National Laboratory) 
    * Xin He (Aramco Services Company) 
-   * [Weiqi Ji](https://deng.mit.edu/people.html) (Massachusetts Institute of Technology) 
+   * [Weiqi Ji](https://www.linkedin.com/in/weiqiji/) (Massachusetts Institute of Technology) 
    * Wei Chen (Michigan Department of Transportation) 
    * Lang Sui (Aramco Services Company) 
    * Yu Gan (Energy Systems Division, Argonne National Laboratory) 
