@@ -1,4 +1,4 @@
-# Project Mobility and Fuel Demand Under COVID-19
+# Machine Learning Model to Project the Impact of COVID-19 on U.S. Motor Gasoline Demand
 
 ## About of the Project
 
