@@ -24,7 +24,7 @@ today =today.strftime("%Y-%m-%d")
 PODA_Model = np.load("./PODA_Model_"+today+".npy",allow_pickle='TRUE').item()
 
 start_Date = '2020-02-25'
-end_Date='2020-06-10'
+end_Date= PODA_Model['ML_File_Date']
 ML_File = PODA_Model['ML_File_Date']    #'5-2-2020'
 
 # YYG_projection_Date='2020-05-13'

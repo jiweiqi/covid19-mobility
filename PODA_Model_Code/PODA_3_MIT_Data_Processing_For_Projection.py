@@ -22,7 +22,13 @@ import matplotlib.pyplot as plt
 import copy
 from myFunctions import def_add_datashift, createFolder
 
-MIT_file_name = 'MIT_covid_analytics_projections-2020-06-17.csv'
+today_x = pd.to_datetime('today')
+today =today_x.strftime("%Y-%m-%d")
+
+'''
+Please download the file from https://www.covidanalytics.io/projections
+'''
+MIT_file_name = 'MIT_covid_analytics_projections_'+today+'.csv'
 
 createFolder('./Mobility projection')
         
@@ -98,39 +104,45 @@ MIT_US_Projection.rename(columns={'State Total Confirmed': 'US Total Confirmed',
 compare MIT and YYG data
 '''
 #load YYG Data
-YYG_Pred_mean = PODA_Model['Data_for_Mobility_Projection_mean'][['US Total Confirmed', 'US Total Death']].drop_duplicates()
-YYG_Pred_lower = PODA_Model['Data_for_Mobility_Projection_lower'][['US Total Confirmed', 'US Total Death']].drop_duplicates()
+YYG_Pred_mean = PODA_Model['Data_for_Mobility_Projection_mean'][['US Daily Confirmed', 'US Daily Death']].drop_duplicates()
+YYG_Pred_lower = PODA_Model['Data_for_Mobility_Projection_lower'][['US Daily Confirmed', 'US Daily Death']].drop_duplicates()
+YYG_Pred_upper = PODA_Model['Data_for_Mobility_Projection_upper'][['US Daily Confirmed', 'US Daily Death']].drop_duplicates()
+
 
 merged_select = MIT_US_Projection
 fig = plt.figure(figsize=(6, 5))
 ax = fig.add_subplot(1, 1, 1)
 # normalized scale
-ax.plot(merged_select.index, merged_select['US Total Confirmed'], '-.o', label='MIT Predicted Confirmed')
+ax.plot(merged_select.index, merged_select['US Total Confirmed'].diff(), '-.o', label='MIT Predicted Confirmed')
 # ax.plot(merged_select.index, merged_select['predicted_total_infected_mean'], 'o', label='YYG Predicted')
 
-ax.plot(YYG_Pred_mean.index, YYG_Pred_mean['US Total Confirmed'], '--b', label='YYG Predicted Confirmed mean')
-ax.plot(YYG_Pred_lower.index, YYG_Pred_lower['US Total Confirmed'], '-r', label='YYG Predicted Confirmed lower')
+ax.plot(YYG_Pred_mean.index, YYG_Pred_mean['US Daily Confirmed'], '--b', label='YYG Predicted Confirmed mean')
+ax.plot(YYG_Pred_lower.index, YYG_Pred_lower['US Daily Confirmed'], '-r', label='YYG Predicted Confirmed lower')
+ax.plot(YYG_Pred_upper.index, YYG_Pred_upper['US Daily Confirmed'], '--k', label='YYG Predicted Confirmed upper')
+
 
 ax.set_xlabel('Label')
 ax.set_ylabel('Prediction')
-ax.set_xlim(pd.to_datetime('2020-03-01'), pd.to_datetime('2020-09-01'))
+ax.set_xlim(pd.to_datetime('2020-03-01'), pd.to_datetime('2020-10-01'))
 ax.legend()
-ax.set_title('US Total Confirmed')
+ax.set_title('US Daily Confirmed')
 
 
 fig = plt.figure(figsize=(6, 5))
 ax = fig.add_subplot(1, 1, 1)
 # normalized scale
-ax.plot(merged_select.index, merged_select['US Total Death'], 'o', label='MIT Predicted Death')
+ax.plot(merged_select.index, merged_select['US Total Death'].diff(), 'o', label='MIT Predicted Death')
 # ax.plot(merged_select.index, merged_select['predicted_total_infected_mean'], 'o', label='YYG Predicted')
 
-ax.plot(YYG_Pred_mean.index, YYG_Pred_mean['US Total Death'], '--b', label='YYG Predicted Death mean')
-ax.plot(YYG_Pred_lower.index, YYG_Pred_lower['US Total Death'], '-r', label='YYG Predicted Death lower')
+ax.plot(YYG_Pred_mean.index, YYG_Pred_mean['US Daily Death'], '--b', label='YYG Predicted Death mean')
+ax.plot(YYG_Pred_lower.index, YYG_Pred_lower['US Daily Death'], '-r', label='YYG Predicted Death lower')
+ax.plot(YYG_Pred_upper.index, YYG_Pred_upper['US Daily Death'], '--k', label='YYG Predicted Death upper')
+
 ax.set_xlabel('Label')
 ax.set_ylabel('Prediction')
-ax.set_xlim(pd.to_datetime('2020-03-01'), pd.to_datetime('2020-09-01'))
+ax.set_xlim(pd.to_datetime('2020-03-01'), pd.to_datetime('2020-10-01'))
 ax.legend()
-ax.set_title('US Total Death')
+ax.set_title('US Daily Death')
 
 '''
 '''

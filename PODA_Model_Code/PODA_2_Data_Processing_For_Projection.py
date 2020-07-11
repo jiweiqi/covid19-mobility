@@ -22,8 +22,8 @@ from myFunctions import def_add_datashift, createFolder
 createFolder('./Mobility projection')
         
 scenario_cases = ['upper', 'lower', 'mean']      #'upper', 'lower',
-shiftDay = 16   #YYG model shift between new infected and confirmed
 
+startDate = '2020-02-24'
 
 today_x = pd.to_datetime('today')
 today =today_x.strftime("%Y-%m-%d")
@@ -55,20 +55,14 @@ df_Area = PODA_Model['State Area']
 #Employment 
 df_Employee = PODA_Model['State Employment']
 
+confirmed = ML_Data[['US Total Confirmed', 'US Daily Confirmed']].drop_duplicates().dropna()
 
+confirmed = confirmed.rename(columns={"US Total Confirmed":"ML US Total Confirmed", "US Daily Confirmed":"ML US Daily Confirmed"})
 
 infected_to_Confirmed = pd.DataFrame(columns = ['Country Name', 'scenario', 'shiftDay', 'regr_coef', 'regr_interp'])
 
 for zz, scenario in enumerate(scenario_cases):
 
-    # if scenario == 'mean':
-    #     infected_Confirmed_Ratio = 6.5
-        
-    # elif scenario == 'upper':
-    #     infected_Confirmed_Ratio = 8.8
-        
-    # else:
-    #     infected_Confirmed_Ratio = 4.7
     '''
     Calculate the new infected to confirmed correlation
     '''
@@ -79,9 +73,10 @@ for zz, scenario in enumerate(scenario_cases):
     
     YYG_Total_Infected = df_US_Projection[['predicted_total_infected_'+scenario]]
     
-    YYG_Total_Infected = YYG_Total_Infected[(YYG_Total_Infected.index < today_x)]
+    YYG_Total_Infected = YYG_Total_Infected[(YYG_Total_Infected.index < today_x) & (YYG_Total_Infected.index > pd.to_datetime('2020-05-01'))]
 
-    confirmed = ML_Data['US Total Confirmed'].drop_duplicates().dropna()
+
+    
     R2_old=0
     for j in range(0, 50):
         YYG_Data_shifted = YYG_Total_Infected['predicted_total_infected_'+scenario].shift(j)
@@ -89,11 +84,11 @@ for zz, scenario in enumerate(scenario_cases):
         merged = pd.merge_asof(YYG_Data_shifted, confirmed, left_index=True, right_index=True).dropna()
         
         x_conv=merged['predicted_total_infected_'+scenario].to_numpy()
-        y_conv = merged['US Total Confirmed'].to_numpy()
+        y_conv = merged['ML US Total Confirmed'].to_numpy()
         x_length = len(x_conv)
         x_conv = x_conv.reshape(x_length, 1)
         y_conv = y_conv.reshape(x_length, 1)
-        regr = linear_model.LinearRegression(fit_intercept = False)
+        regr = linear_model.LinearRegression(fit_intercept = True)
         regr.fit(x_conv, y_conv)
         
         R2_new = regr.score(x_conv, y_conv)
@@ -114,10 +109,10 @@ for zz, scenario in enumerate(scenario_cases):
     ax.plot(merged_select.index, merged_select['predicted_total_infected_'+scenario]*new_row['regr_coef'] + new_row['regr_interp'], 'o', label='YYG Predicted')
     # ax.plot(merged_select.index, merged_select['predicted_total_infected_mean'], 'o', label='YYG Predicted')
 
-    ax.plot(merged_select.index, merged_select['US Total Confirmed'], label='confirmed')
+    ax.plot(merged_select.index, merged_select['ML US Total Confirmed'], label='confirmed')
     ax.set_xlabel('Label')
     ax.set_ylabel('Prediction')
-    ax.set_xlim(pd.to_datetime('2020-03-01'), pd.to_datetime('2020-06-01'))
+    ax.set_xlim(pd.to_datetime('2020-05-01'), pd.to_datetime('today'))
     ax.legend()
     ax.set_title('US'+scenario)
     
@@ -141,6 +136,10 @@ for zz, scenario in enumerate(scenario_cases):
     
     df_US_Projection['US Total Confirmed'] = df_US_Projection['predicted_total_infected_'+scenario].shift(new_row['shiftDay'])*new_row['regr_coef'] + new_row['regr_interp']
     df_US_Projection['US Daily Confirmed'] = df_US_Projection['US Total Confirmed'].diff()
+    for i, da in enumerate(confirmed.index):
+        df_US_Projection.loc[da,'US Total Confirmed']= confirmed.loc[da, 'ML US Total Confirmed']
+        df_US_Projection.loc[da,'US Daily Confirmed']= confirmed.loc[da, 'ML US Daily Confirmed']
+        
     # df_US_Projection['US Daily Confirmed'] = (df_US_Projection['predicted_new_infected_'+scenario].shift(shiftDay))/infected_Confirmed_Ratio
     df_US_Projection['US Daily Confirmed Dfdt'] = df_US_Projection['US Daily Confirmed'].diff() 
     # df_US_Projection = def_add_datashift (df_US_Projection, 'US Total Confirmed', [1, 3, 7, 10])
@@ -152,7 +151,7 @@ for zz, scenario in enumerate(scenario_cases):
     df_US_Projection['US Total Death'] = df_US_Projection['predicted_total_deaths_'+scenario].fillna(0) + df_US_Projection['total_deaths'].fillna(0)
     df_US_Projection['US Daily Death'] = df_US_Projection['predicted_deaths_'+scenario].fillna(0) + df_US_Projection['actual_deaths'].fillna(0)
     
-    a = df_US_Projection['US Daily Death'].diff()
+    # a = df_US_Projection['US Daily Death'].diff()
     
     df_US_Projection['US Daily Death Dfdt'] = df_US_Projection['US Daily Death'].diff()
     
@@ -161,6 +160,7 @@ for zz, scenario in enumerate(scenario_cases):
     df_US_Projection = def_add_datashift (df_US_Projection, 'US Daily Death Dfdt', [1, 3, 7, 10])
     
     df_US_Projection = df_US_Projection.iloc[:, 18:100]
+    df_US_Projection = df_US_Projection[df_US_Projection.index > pd.to_datetime(startDate)]
     
     stateNameList = df_StateName_Code['State Name'].drop_duplicates().dropna().tolist()
     

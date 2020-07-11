@@ -17,7 +17,7 @@ https://github.com/youyanggu/covid19_projections/tree/master/projections
 Check Apple mobility website: https://www.apple.com/covid19/mobility
 '''
 YYG_date_adjust = 1
-Apple_Date_adjust =1
+Apple_Date_adjust =2
 
 
 YYG_Date =pd.to_datetime('today')-pd.DateOffset(days=YYG_date_adjust)
@@ -42,7 +42,7 @@ print('Read Apple Data')
 '''
 Need to check Apple Website to find the right url path
 '''
-df_Apple_Mobility = pd.read_csv("https://covid19-static.cdn-apple.com/covid19-mobility-data/2010HotfixDev20/v3/en-us/applemobilitytrends-"+Apple_File_Date+".csv")
+df_Apple_Mobility = pd.read_csv("https://covid19-static.cdn-apple.com/covid19-mobility-data/2011HotfixDev16/v3/en-us/applemobilitytrends-"+Apple_File_Date+".csv")
 createFolder('./Mobility Google-Apple')
 df_Apple_Mobility.to_csv('./Mobility Google-Apple/applemobilitytrends-'+Apple_File_Date+'.csv')  
 
@@ -85,7 +85,7 @@ Get COVID-19 Pandemic Data
 df_Confirmed_Ini = pd.read_csv('https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv')
 createFolder('./COVID')
 df_Confirmed_Ini.to_csv('./COVID/Confirmed_'+today+'.csv')     # save US Confirmed case data
-
+df_Confirmed_Ini = df_Confirmed_Ini.iloc[:, :-1]
 df_Confirmed = df_Confirmed_Ini[df_Confirmed_Ini['countyFIPS'] != 1]
 df_Confirmed = df_Confirmed[df_Confirmed['countyFIPS'] != 0]
 df_Confirmed.rename(columns={"State": "State Code"}, inplace=True)   #rename the column name
@@ -94,7 +94,7 @@ df_Confirmed= pd.melt(df_Confirmed,
             value_vars=list(df_Confirmed.columns[5:]), # list of days of the week
             var_name='Date', 
             value_name='County Total Confirmed')
-
+df_Confirmed=df_Confirmed.dropna()
 df_Confirmed['Date'] = pd.to_datetime(df_Confirmed['Date'])
 cols = ['State Code']
 df_Confirmed = df_Confirmed.join(df_StateName_Code.set_index(cols), on=cols, how='left')
@@ -110,7 +110,7 @@ Read COVID Death Data
 df_Death_Ini = pd.read_csv('https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_deaths_usafacts.csv')
 df_Death_Ini.to_csv('./COVID/Death_'+today+'.csv')     # save US Confirmed case data
 
-df_Death = df_Death_Ini[df_Confirmed_Ini['countyFIPS'] != 1]
+df_Death = df_Death_Ini[df_Death_Ini['countyFIPS'] != 1]
 df_Death = df_Death[df_Death['countyFIPS'] != 0]
 df_Death.rename(columns={"State": "State Code"}, inplace=True)   #rename the column name
 df_Death= pd.melt(df_Death, 
@@ -118,6 +118,7 @@ df_Death= pd.melt(df_Death,
             value_vars=list(df_Death.columns[5:]), # list of days of the week
             var_name='Date', 
             value_name='County Total Death')
+df_Death=df_Death.dropna()
 
 df_Death['Date'] = pd.to_datetime(df_Death['Date'])
 cols = ['State Code']

@@ -24,7 +24,7 @@ PODA_Model = np.load("./PODA_Model_"+today+".npy",allow_pickle='TRUE').item()
 
 # Model_Date = np.load("./Model_Parameter.npy",allow_pickle='TRUE').item()
 google_Mobility_Day = PODA_Model['ML_File_Date']
-start_Date = '03-25-2020'
+start_Date = '04-05-2020'
 end_Date = PODA_Model['ML_File_Date']   #'5-2-2020'
 # google_Mobility_Day='2020-05-17'
 
@@ -132,13 +132,13 @@ def min_func(factor):
     EIA_fuel = EIA_fuel.dropna()
 
     EIA_fuel['fuelpred'] = EIA_fuel['Google']*baseline
-    # EIA_fuel = EIA_fuel[EIA_fuel.index !=  pd.to_datetime('05-08-2020')]
+    EIA_fuel = EIA_fuel[EIA_fuel.index !=  pd.to_datetime('05-08-2020')]
     EIA_fuel['least_square'] = ((EIA_fuel['Gasoline']-EIA_fuel['fuelpred'])/EIA_fuel['Gasoline'])**2
     retu = EIA_fuel['least_square'].sum()
     return retu
     
 
-x0=[1, 1, 1, 1, 1, 1, 1, 1 , 0.5, 0, 3]
+x0=[1, 1, 1, 1, 1, 1, 1, 1 , 0.5, 0, 0]
 bounds = Bounds([0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0], [1.2, 1.2, 1.2, 1.2, 1.2, 1, 1.3, 1.3, 1, 0.05, 10])
 
 # res = minimize(min_func, x0, method='trust-constr', options={'verbose': 1, 'disp': True}, bounds=bounds)
