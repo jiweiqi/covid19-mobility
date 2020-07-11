@@ -34,7 +34,7 @@ The authors are solely responsible for the views expressed in this study.
 
 ## Acknowledgement
 
-We would like to thanks the helps from
+We would like to thank the helps from
 
 * [Shihao Wen](https://www.linkedin.com/in/shihao-wen/) on the data visulization of project website
 * [Youyang Gu](https://www.linkedin.com/in/youyanggu/) on the COVID-19 pandemic model
