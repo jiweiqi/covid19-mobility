@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
 
-today = '2020-06-17'
+today = '2020-07-08'
 
 data_dir = '../fuel_demand_projections/'
 
