@@ -2,17 +2,7 @@
 
 This directory hosts all of the python code and data/links for training the model and make projection.
 
-## Dependence
-* pytorch
-* sklearn
-* shap
-* pandas
-* seaborn
-* tqdm
-* numpy
-* matplotlib
-
-## Download Pandenmic and Mobility Data
+## Download Pandenmic and Mobility Data and Run PODA Model
 The PODA Python codes need some adjustments to download pandemic and mobility data. 
 1.  Save all files in the same folder
 2.	Adjust the following variables in 
@@ -45,5 +35,15 @@ MIT_file_name = 'MIT_covid_analytics_projections-2020-06-17.csv'
     h.	PODA_8_Fuel Demand Projection.py
     
     All results, including the data downloaded online will be saved in file ”PODA_Model_xxxx_xx_xx.npy”, in which “xxxx_xx_xx” represents the date (in format yyyy_mm_dd) of the model.
+
+## Dependence
+* pytorch
+* sklearn
+* shap
+* pandas
+* seaborn
+* tqdm
+* numpy
+* matplotlib
 
 You can also find a detailed instruction on how to runing the code in the word document of `Readme.docx`.
