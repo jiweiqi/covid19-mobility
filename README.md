@@ -1,4 +1,4 @@
-# Machine Learning Model to Project the Impact of COVID-19 on U.S. Motor Gasoline Demand
+# Project the Impact of COVID-19 on U.S. Motor Gasoline Demand
 
 ## About of the Project
 
@@ -19,7 +19,7 @@ You can find interactive visulizations of the projection and model details at [c
 ## Our Team
 
    * [Shiqi Ou](https://www.linkedin.com/in/xin-he-11035b14/) (Energy and Transportation Science Division, Oak Ridge National Laboratory) 
-   * Xin He (Aramco Services Company) 
+   * [Xin He](https://www.linkedin.com/in/xin-he-11035b14/) (Aramco Services Company) 
    * [Weiqi Ji](https://www.linkedin.com/in/weiqiji/) (Massachusetts Institute of Technology) 
    * Wei Chen (Michigan Department of Transportation) 
    * Lang Sui (Aramco Services Company) 
