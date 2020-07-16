@@ -2,7 +2,7 @@
 
 ## About of the Project
 
-During this COVID-19 pandemic, we have seen a significant drop in mobility and fuel demand. We take a data-driven approach to understand the impact of COVID-19 statistics and states policy on personal mobility. We also build a model to connect the mobility changes to fuel demand changes. We then take the projected COVID-19 infection case numbers from the epidemiology model as inputs to predict future trends of mobility and fuel demand.
+During this COVID-19 pandemic, we have seen a significant drop in mobility and fuel demand. We take a machine learning approach to understand the impact of COVID-19 statistics and states policy on personal mobility. We also build a model to connect the mobility changes to fuel demand changes. We then take the projected COVID-19 infection case numbers from the epidemiology model as inputs to predict future trends of mobility and fuel demand.
 
 ## Code Structure
 
@@ -35,6 +35,5 @@ The authors are solely responsible for the views expressed in this study.
 ## Acknowledgement
 
 We would like to thank the helps from
-
-* [Shihao Wen](https://www.linkedin.com/in/shihao-wen/) on the data visulization of project website
 * [Youyang Gu](https://www.linkedin.com/in/youyanggu/) on the COVID-19 pandemic model
+* [Shihao Wen](https://www.linkedin.com/in/shihao-wen/) on the data visulization of project website
