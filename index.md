@@ -32,7 +32,7 @@ As the figure below shows, the PODA model contains two major modules. The first 
 ## Our Team
 
    * [Shiqi Ou](https://www.linkedin.com/in/shiqi-shawn-ou-9137a149/) (Energy and Transportation Science Division, Oak Ridge National Laboratory)
-   * Xin He (Aramco Services Company) 
+   * [Xin He](https://www.linkedin.com/in/xin-he-11035b14/) (Aramco Services Company) 
    * [Weiqi Ji](https://www.linkedin.com/in/weiqiji/) (Massachusetts Institute of Technology) 
    * Wei Chen (Michigan Department of Transportation) 
    * Lang Sui (Aramco Services Company) 
