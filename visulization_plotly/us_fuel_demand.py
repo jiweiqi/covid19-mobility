@@ -9,7 +9,9 @@ import plotly.io as pio
 
 data_dir = '../fuel_demand_projections/'
 
-PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_2020-07-08.npy',
+today = '2020-07-15'
+
+PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_{}.npy'.format(today),
                      allow_pickle='TRUE').item()
 
 fig = go.Figure()
@@ -93,9 +95,9 @@ fig.update_layout(
 fig.add_shape(
     dict(
         type="line",
-        x0='2020-07-08',
+        x0=today,
         y0=0,
-        x1='2020-07-08',
+        x1=today,
         y1=10**7,
         line=dict(
             color='rgb(65, 65, 69)',
