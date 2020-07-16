@@ -9,9 +9,9 @@ The PODA Python codes need some adjustments to download pandemic and mobility da
     
     a. Use `PODA_1_Data_Processing_for_ML.py` to download data from website automatically:
        
-        i. `YYG_date_adjust = 1`. You need to check [YYG projections website](https://github.com/youyanggu/covid19_projections/tree/master/projections) and ind the latest update. `YYG_date_adjust` is the day difference between today and the latest YYG projection.
+      * `YYG_date_adjust = 1`. You need to check [YYG projections website](https://github.com/youyanggu/covid19_projections/tree/master/projections) and ind the latest update. `YYG_date_adjust` is the day difference between today and the latest YYG projection.
        
-        ii. `Apple_Date_adjust = 1`. 
+      * `Apple_Date_adjust = 1`. 
         ```Python
         df_Apple_Mobility = pd.read_csv("https://covid19-static.cdn-apple.com/covid19-mobility-data/2009HotfixDev27/v3/en-us/applemobilitytrends-"+Apple_File_Date+".csv")
         ```
