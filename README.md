@@ -1,5 +1,7 @@
 # Project the Impact of COVID-19 on U.S. Motor Gasoline Demand
 
+Read our paper in **Nature Energy** [Machine learning model to project the impact of COVID-19 on US motor gasoline demand](https://www.nature.com/articles/s41560-020-0662-1)
+
 ## About of the Project
 
 During this COVID-19 pandemic, we have seen a significant drop in mobility and fuel demand. We take a machine learning approach to understand the impact of COVID-19 statistics and states policy on personal mobility. We also build a model to connect the mobility changes to fuel demand changes. We then take the projected COVID-19 infection case numbers from the epidemiology model as inputs to predict future trends of mobility and fuel demand.
