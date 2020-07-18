@@ -6,6 +6,8 @@ During this COVID-19 pandemic, we have seen a significant drop in mobility and f
 
 We then take the projected COVID-19 infection case numbers from the epidemiology model as inputs to predict future trends of mobility and fuel demand. We hope those projections could benefit economic and transportation energy planning and policy discussions.
 
+Yon can find more details from our paper in **Nature Energy** [Machine learning model to project the impact of COVID-19 on US motor gasoline demand](https://www.nature.com/articles/s41560-020-0662-1)
+
 ## US Motor Gasoline Demand Projection - Updated Weekly
 
 Looking ahead, there are significant uncertainties in the COVID-19 projections and Fuel Demand projections depends on whether people will continue social distancing in the reopening phases. In the reference scenario, it is assumed that people will still largely keep social distancing and states will re-impose stay home order if there is a second wave. Therefore, we see a flatten projection curve. In the optimistic cases, people will keep social distancing even the stay-home-order is eased. In the pessimistic scenario, the fuel demand could face a second wave of droping due to the second wave of COVID-19 pandemic.
