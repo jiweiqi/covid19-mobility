@@ -6,7 +6,7 @@ During this COVID-19 pandemic, we have seen a significant drop in mobility and f
 
 We then take the projected COVID-19 infection case numbers from the epidemiology model as inputs to predict future trends of mobility and fuel demand. We hope those projections could benefit economic and transportation energy planning and policy discussions.
 
-Yon can find more details from our paper in **Nature Energy** [Machine learning model to project the impact of COVID-19 on US motor gasoline demand](https://www.nature.com/articles/s41560-020-0662-1)
+You can find more details from our paper in **Nature Energy** [Machine learning model to project the impact of COVID-19 on US motor gasoline demand](https://www.nature.com/articles/s41560-020-0662-1)
 
 ## US Motor Gasoline Demand Projection - Updated Weekly
 
