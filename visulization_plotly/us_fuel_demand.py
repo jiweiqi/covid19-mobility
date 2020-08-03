@@ -9,7 +9,7 @@ import plotly.io as pio
 
 data_dir = '../fuel_demand_projections/'
 
-today = '2020-07-15'
+today = '2020-07-26'
 
 PODA_Model = np.load(data_dir+'PODA_Model/PODA_Model_{}.npy'.format(today),
                      allow_pickle='TRUE').item()
