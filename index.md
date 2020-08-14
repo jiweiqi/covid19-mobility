@@ -16,7 +16,8 @@ Looking ahead, there are significant uncertainties in the COVID-19 projections a
 <p align="center">
  {% include iframe.html %}
 </p>
-Noted that EIA data was shifted 7 day to represent the delay between actual fuel use, refueling, and EIA data reporting. We also include the COVID-19 projections from [YYG](https://covid19-projections.com) here for your reference.
+
+We also include the COVID-19 projections from [YYG](https://covid19-projections.com) here for your reference.
 
 <p align="center">
  {% include iframe_YYG_US.html %}
