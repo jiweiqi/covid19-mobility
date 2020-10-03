@@ -17,13 +17,14 @@ import joblib
 
 today = pd.to_datetime('today')
 today =today.strftime("%Y-%m-%d")
+today = '2020-09-12'
 
 
 # Model_Date = np.load("./Model_Parameter.npy",allow_pickle='TRUE').item()
 
 PODA_Model = np.load("./PODA_Model_"+today+".npy",allow_pickle='TRUE').item()
 
-start_Date = '2020-02-25'
+start_Date = '2020-04-05'
 end_Date= PODA_Model['ML_File_Date']
 ML_File = PODA_Model['ML_File_Date']    #'5-2-2020'
 
@@ -34,8 +35,8 @@ ML_File = PODA_Model['ML_File_Date']    #'5-2-2020'
 
 # yesterday =pd.to_datetime('today')-pd.DateOffset(days=1)
 # yesterday= yesterday.strftime("%Y-%m-%d")
-today = pd.to_datetime('today')
-today =today.strftime("%Y-%m-%d")
+# today = pd.to_datetime('today')
+# today =today.strftime("%Y-%m-%d")
 
 Apple_File_Date=PODA_Model['Apple_File_Date']
 # pd_all = pd.read_excel('./ML Files/State_Level_Data_forML_'+ML_File+'.xlsx', header=0)
@@ -50,8 +51,8 @@ data_used = data_used[(data_used['date']> (pd.to_datetime(start_Date)-pd.DateOff
 # data_used = data_used[(data_used['date']> (pd.to_datetime(start_Date)-pd.DateOffset(days=7)))]
 data_used = data_used.set_index('date')
 
-NHTS_Category_Share = pd.read_excel('NHTS.xlsx', sheet_name='Category Share')
-NHTS_State_Fuel_Share = pd.read_excel('NHTS.xlsx', sheet_name='State Fuel Share')
+NHTS_Category_Share = pd.read_excel('./data/NHTS.xlsx', sheet_name='Category Share')
+NHTS_State_Fuel_Share = pd.read_excel('./data/NHTS.xlsx', sheet_name='State Fuel Share')
 PODA_Model['NHTS Category Share'] = NHTS_Category_Share
 PODA_Model['NHTS State Fuel Share'] = NHTS_State_Fuel_Share
 

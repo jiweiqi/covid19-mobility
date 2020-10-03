@@ -34,11 +34,12 @@ from os import path
 '''
 You can increase this number to do more trainings, but usually 10,000 is enough
 '''
-trainSteps =5000
+trainSteps =1000
 matplotlib.rcParams.update({'font.size': 22})
 sns.set(style="ticks")
 today = pd.to_datetime('today')
 today =today.strftime("%Y-%m-%d")
+# today = '2020-07-29'
 
 PODA_Model = np.load(("./PODA_Model_"+today+".npy"),allow_pickle='TRUE').item()
 google_Mobility_Day = PODA_Model['ML_File_Date']
@@ -67,7 +68,7 @@ class Net(torch.nn.Module):
         self.seq.add_module('fc_1', nn.Linear(n_feature, nodes))
         self.seq.add_module('relu_1', nn.ReLU())
 
-        for i in range(layers):
+        for i in range(layers-1):
             self.seq.add_module('fc_' + str(i + 2), nn.Linear(nodes, nodes))
             self.seq.add_module('relu_' + str(i + 2), nn.ReLU())
 
@@ -85,24 +86,35 @@ createFolder('./ML Files')
 pd_all = PODA_Model['ML_Data']
 
 
-# layers_number=4
-# nodes_number = 20
+
+# col_X_Name = ['US Daily Confirmed', 
+#               'US Daily Confirmed Dfdt', 
+#               'US Daily Confirmed Dfdt_pct',
+#               'US Daily Death', 
+#               'US Daily Death Dfdt', 
+#               'US Daily Death Dfdt_pct',
+#               'State Daily Confirmed',  
+#               'State Daily Death', 
+#               'State Daily Death Dfdt',  
+#               'State Population', 'State_Population_Density', 'EmergDec', 'SchoolClose', 
+#               'NEBusinessClose', 'RestaurantRestrict', 'StayAtHome', 'WeekDay', 'PublicMask']    #state confirmed, Dfdt, dfdt_pct, PublicMask
+
+# col_X_Name =['US Daily Confirmed', 'US Daily Confirmed Dfdt', 'US Daily Death', 
+#              'US Daily Death Dfdt', 'State Daily Death', 'State Daily Death Dfdt', 
+#              'State Population', 'State_Area', 'State_Unemployment_Rate', 
+#              'State_Household_Income', 'EmergDec', 'SchoolClose', 'NEBusinessClose', 
+#              'RestaurantRestrict', 'StayAtHome', 'WeekDay', 'PublicMask', 'statecode']  #Dfdt, PublicMask  No. 1
+
+col_X_Name = ['US Daily Confirmed', 'US Daily Confirmed_shifted_10', 'US Daily Confirmed Dfdt', 'US Daily Confirmed Dfdt_shifted_10', 
+              'US Daily Death', 'US Daily Death_shifted_10', 
+              'US Daily Death Dfdt', 'US Daily Death Dfdt_shifted_10', 
+              'State Daily Confirmed', 'State Daily Confirmed_shifted_10', 
+              'State Daily Death', 'State Daily Death_shifted_10', 
+              'State Daily Death Dfdt', 'State Daily Death Dfdt_shifted_10', 
+              'State Population', 'State_Population_Density', 'EmergDec', 'SchoolClose', 
+              'NEBusinessClose', 'RestaurantRestrict', 'StayAtHome', 'WeekDay', 'PublicMask']  #Dfdt, 10 day, PublicMask  (No.2)
 
 
-
-# Assign the ML inputs
-col_X_Name = ['US Daily Confirmed', 'US Daily Confirmed Dfdt', 'US Daily Confirmed_shifted_1', 
-             'US Daily Confirmed_shifted_3', 'US Daily Confirmed_shifted_7', 'US Daily Confirmed_shifted_10', 
-             'US Daily Confirmed Dfdt_shifted_1', 'US Daily Confirmed Dfdt_shifted_3', 'US Daily Confirmed Dfdt_shifted_7', 
-             'US Daily Confirmed Dfdt_shifted_10', 'US Daily Death', 'US Daily Death Dfdt', 'US Daily Death_shifted_1', 
-             'US Daily Death_shifted_3', 'US Daily Death_shifted_7', 'US Daily Death_shifted_10', 
-             'US Daily Death Dfdt_shifted_1', 'US Daily Death Dfdt_shifted_3', 'US Daily Death Dfdt_shifted_7', 
-             'US Daily Death Dfdt_shifted_10', 'State Daily Death', 'State Daily Death Dfdt', 'State Daily Death_shifted_1', 
-             'State Daily Death_shifted_3', 'State Daily Death_shifted_7', 'State Daily Death_shifted_10', 
-             'State Daily Death Dfdt_shifted_1', 'State Daily Death Dfdt_shifted_3', 'State Daily Death Dfdt_shifted_7', 
-             'State Daily Death Dfdt_shifted_10', 'State Population', 'State_D_Death_Per1000', 'State_Daily_Death_perArea',
-             'State_Area', 'State_Population_Density', 'State_Unemployment_Rate', 'State_Household_Income', 'EmergDec', 'SchoolClose', 'NEBusinessClose', 
-             'RestaurantRestrict', 'StayAtHome', 'WeekDay', 'statecode']  # 
 
 #Assign the ML outputs
 col_Y_Name = ['retail_and_recreation', 'grocery_and_pharmacy','parks', 
@@ -140,10 +152,10 @@ nodes_List =[25]  #[15, 20, 25, 30]
 for i, layers_number in enumerate(layer_List):
     for j, nodes_number in enumerate(nodes_List):
         
-        checkfile = 'checkpoint_MLmodel_'+google_Mobility_Day+'layer_'+str(layers_number)+'node_'+str(nodes_number)+'ReLU'
+        checkfile = 'checkpoint_MLmodel_'+google_Mobility_Day+'layer_'+str(layers_number)+'node_'+str(nodes_number)+'ReLU_No2'
         
         if path.exists("./ML Files/"+checkfile+'.tar'):
-            is_restart = True
+            is_restart = False
         else:
             is_restart= False
             
@@ -179,7 +191,7 @@ for i, layers_number in enumerate(layer_List):
         X_test = torch.Tensor(X_test)
         Y_test = torch.Tensor(Y_test)
         
-        batchSize = 64
+        batchSize = 16
         train_data = MyDataSet(data=X_train, label=Y_train)
         train_loader = DataLoader(train_data, batch_size=batchSize,
                                   shuffle=True, drop_last=True, pin_memory=False)
@@ -202,7 +214,7 @@ for i, layers_number in enumerate(layer_List):
                   n_output=len(col_Y_Name))
         
         criterion = torch.nn.MSELoss()
-        optimizer = torch.optim.Adam(net.parameters(), lr=0.001, weight_decay=1e-2)
+        optimizer = torch.optim.Adam(net.parameters(), lr=0.0005, weight_decay=1e-2)
         
         if is_restart is True:
             checkpoint = torch.load('./ML Files/'+checkfile + '.tar')
@@ -212,7 +224,7 @@ for i, layers_number in enumerate(layer_List):
             loss_list = checkpoint['loss_list']
         
         # train the network
-        for epoch in tqdm(range(trainSteps)):
+        for epoch in tqdm(range(trainSteps+1)):
             if is_restart:
                 if epoch < epoch_old:
                     continue
@@ -342,7 +354,7 @@ for i, layers_number in enumerate(layer_List):
                 fig.tight_layout()
         
                 fig.savefig('./ML Files/'+checkfile, 
-                            dpi=600, facecolor="w", edgecolor="w", 
+                            dpi=300, facecolor="w", edgecolor="w", 
                             orientation="portrait", bbox_inches='tight')
                 ax.cla()
                 fig.clf()
@@ -352,4 +364,4 @@ for i, layers_number in enumerate(layer_List):
 PODA_Model['ML_R2_ReLU'] = R2_save
 np.save(("./PODA_Model_"+today+".npy"), PODA_Model)
 
-R2_save.to_csv('./R2_ReLU.csv')
+R2_save.to_csv('./ML Files/R2_ReLU'+today+'.csv')

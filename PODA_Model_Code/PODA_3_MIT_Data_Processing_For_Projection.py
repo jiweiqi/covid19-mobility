@@ -25,6 +25,8 @@ from myFunctions import def_add_datashift, createFolder
 today_x = pd.to_datetime('today')
 today =today_x.strftime("%Y-%m-%d")
 
+# today = '2020-08-07'
+
 '''
 Please download the file from https://www.covidanalytics.io/projections
 '''
@@ -33,21 +35,26 @@ MIT_file_name = 'MIT_covid_analytics_projections_'+today+'.csv'
 createFolder('./Mobility projection')
         
 scenario_cases = ['mean']      #'upper', 'lower',
-shiftDay = 16   #YYG model shift between new infected and confirmed
+# shiftDay = 16   #YYG model shift between new infected and confirmed
 
-today_x = pd.to_datetime('today')
-today =today_x.strftime("%Y-%m-%d")
+# today_x = pd.to_datetime('today')
+# today =today_x.strftime("%Y-%m-%d")
 
 PODA_Model = np.load(("./PODA_Model_"+today+".npy"),allow_pickle='TRUE').item()
 
 
 MIT_Data = pd.read_csv(MIT_file_name, header=0)
 
-MIT_Data = MIT_Data[(MIT_Data['Country'] == 'US') & (MIT_Data['Province']!='District of Columbia')]
+MIT_Data = MIT_Data[(MIT_Data['Country'] == 'US') & 
+                    (MIT_Data['Province']!='District of Columbia')]
 
-MIT_Data = MIT_Data[['Country', 'Province', 'Day', 'Total Detected', 'Total Detected Deaths']]
-MIT_Data.rename(columns={'Province':'State Name', 'Day':'date', 'Total Detected': 'State Total Confirmed', 
-                         'Total Detected Deaths':'State Total Deaths'}, inplace=True)
+MIT_Data = MIT_Data[['Country', 'Province', 'Day', 
+                     'Total Detected', 'Total Detected Deaths']]
+MIT_Data.rename(columns={'Province':'State Name', 
+                         'Day':'date', 
+                         'Total Detected': 'State Total Confirmed', 
+                         'Total Detected Deaths':'State Total Deaths'}, 
+                inplace=True)
 
 MIT_Data['date'] = pd.to_datetime(MIT_Data['date'])
 MIT_Data['Date'] = MIT_Data['date']
@@ -71,7 +78,8 @@ df_StateName_Code = PODA_Model['StateName_StateCode']
 ML_Data = PODA_Model['ML_Data']
 
 # load Policy Data
-df_Policy = pd.read_csv('https://raw.githubusercontent.com/COVID19StatePolicy/SocialDistancing/master/data/USstatesCov19distancingpolicy.csv', encoding= 'unicode_escape')
+df_Policy = pd.read_csv('https://raw.githubusercontent.com/COVID19StatePolicy/SocialDistancing/master/data/USstatesCov19distancingpolicy.csv', 
+                        encoding= 'unicode_escape')
 createFolder('./Policy File')
 df_Policy.to_excel('./Policy File/Policy'+today+'.xlsx')     # save policy data
 
@@ -98,7 +106,6 @@ MIT_State_Projection = PODA_Model['MIT_Projection'][['State Total Confirmed', 'S
 MIT_US_Projection = MIT_State_Projection[MIT_State_Projection['State Name'] == 'None']
 MIT_US_Projection.rename(columns={'State Total Confirmed': 'US Total Confirmed', 
                          'State Total Deaths': 'US Total Death'}, inplace=True)
-
 
 '''
 compare MIT and YYG data
@@ -206,11 +213,15 @@ for stateName in stateNameList:
     
     df_State_Data =  MIT_State_Projection[MIT_State_Projection['State Name'] == stateName]
     df_State_Data['State Daily Confirmed'] = df_State_Data['State Total Confirmed'].diff()
+    df_State_Data['State Daily Confirmed Dfdt'] = df_State_Data['State Daily Confirmed'].diff()
+
     df_State_Data['State Daily Death']=df_State_Data['State Total Deaths'].diff()
     df_State_Data['State Daily Death Dfdt'] = df_State_Data['State Daily Death'].diff()
     # df_State_Data = def_add_datashift (df_State_Data, 'State Total Death', [1, 3, 7, 10])
     df_State_Data = def_add_datashift (df_State_Data, 'State Daily Death', [1, 3, 7, 10])
     df_State_Data = def_add_datashift (df_State_Data, 'State Daily Death Dfdt', [1, 3, 7, 10])
+    df_State_Data = def_add_datashift (df_State_Data, 'State Daily Confirmed', [1, 3, 7, 10])
+    df_State_Data = def_add_datashift (df_State_Data, 'State Daily Confirmed Dfdt', [1, 3, 7, 10])
     
     merged1 = pd.merge_asof(df_US_Projection, df_State_Data, left_index=True,right_index=True, direction='backward')
     # merged1 = pd.merge_asof(merged1, df_State_Projection, left_index=True,right_index=True, direction='backward')
@@ -256,6 +267,21 @@ for stateName in stateNameList:
             policy_End = max(policy_Expiry, policy_End)
         merged1.loc[(merged1.index > policy_End) & (pd.notnull(policy_End)), policy_Name] = 0 
     
+    merged1['PublicMask']= 0
+    policy_Data_na = df_Policy[(df_Policy['StateName'] == stateName) & (df_Policy['StatePolicy'] == 'PublicMask') &(pd.isnull(df_Policy['PublicMaskLevel']))]
+    policy_Data_1 = df_Policy[(df_Policy['StateName'] == stateName) & (df_Policy['StatePolicy'] == 'PublicMask') &(df_Policy['PublicMaskLevel'] == 'Mandate1')]
+    policy_Data_2 = df_Policy[(df_Policy['StateName'] == stateName) & (df_Policy['StatePolicy'] == 'PublicMask') &(df_Policy['PublicMaskLevel'] == 'Mandate2')]
+    policy_Data_3 = df_Policy[(df_Policy['StateName'] == stateName) & (df_Policy['StatePolicy'] == 'PublicMask') &(df_Policy['PublicMaskLevel'] == 'Mandate3')]
+    
+    if not(policy_Data_na.empty):
+        merged1.loc[(merged1.index >= policy_Data_na['DateEnacted'].min()), 'PublicMask'] = 0.5 
+    if not(policy_Data_1.empty):
+        merged1.loc[(merged1.index >= policy_Data_1['DateEnacted'].min()), 'PublicMask'] = 1
+    if not(policy_Data_2.empty):
+        merged1.loc[(merged1.index >= policy_Data_2['DateEnacted'].min()), 'PublicMask'] = 2
+    if not(policy_Data_3.empty):
+        merged1.loc[(merged1.index >= policy_Data_3['DateEnacted'].min()), 'PublicMask'] = 3
+    
     merged1['WeekDay'] = merged1.index.weekday+1 
     merged1['State Name'] = stateName
     merged1['County Name'] = ''
@@ -274,6 +300,31 @@ PODA_Model['Data_for_Mobility_Projection_MIT']=all_Data
 save_File = "./Mobility projection/MIT_State_Level_Data_for_Projection_"+today+".xlsx"
 all_Data.to_excel(save_File)
 
+
+#plot results
+
+Line_Style =['.-m', '-.r', '-b', '--g']
+fig2 = plt.figure(figsize=(6, 5))
+fig3 = plt.figure(figsize=(6, 5))
+
+ax2 = fig2.add_subplot(1, 1, 1)
+ax3 = fig3.add_subplot(1, 1, 1)
+
+caseID =['lower', 'mean', 'upper', 'MIT']   
+for case_i, case in enumerate(caseID):
+
+    
+    COVID = PODA_Model['Data_for_Mobility_Projection_'+case]
+    COVID = COVID[COVID['State Name']== 'Michigan']
+    
+    ax2.plot(COVID.index, COVID['US Daily Confirmed'], Line_Style[case_i], label=case)
+    
+    ax3.plot(COVID.index, COVID['US Daily Death'],  Line_Style[case_i], label=case)
+    # if (case == 'mean') & (isopen ==''):
+    #     data_save.to_excel('C:/Users/hexx/Box Sync/Energy-COVID-19/Data for Website/Mobility_State_'+YYG_projection_Date+case+'.xlsx')
+        
+ax2.legend()
+ax3.legend()
     
 np.save(("./PODA_Model_"+today+".npy"), PODA_Model)
   

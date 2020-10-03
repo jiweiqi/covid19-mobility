@@ -10,17 +10,19 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from shutil import copyfile
-from myFunctions import def_add_datashift, createFolder
+from myFunctions import createFolder
 
 today = pd.to_datetime('today')
 today =today.strftime("%Y-%m-%d")
+today = '2020-09-12'
+
 # Model_Date = np.load("./Model_Parameter.npy",allow_pickle='TRUE').item()
 
 PODA_Model = np.load("./PODA_Model_"+today+".npy",allow_pickle='TRUE').item()
 
 google_Mobility_Day = PODA_Model['ML_File_Date']
 
-start_Date = '03-01-2020'
+start_Date = '03-03-2020'
 YYG_projection_Date=PODA_Model['YYG_File_Date']
 ML_Model=PODA_Model['ML_File_Date']
 fuel_mobility_factor_file = ML_Model
@@ -32,14 +34,24 @@ isopen=''    #'_noreopen'
 fuel_Demand_EIA = PODA_Model['Fuel_Demand_EIA'].reset_index()
 fuel_Demand_EIA = fuel_Demand_EIA.set_index('Date')
 
+fig2 = plt.figure(figsize=(6, 5))
+fig3 = plt.figure(figsize=(6, 5))
+
+ax2 = fig2.add_subplot(1, 1, 1)
+ax3 = fig3.add_subplot(1, 1, 1)
+
+Line_Style =['.-m', '-.r', '-b', '--g']
+
 caseID =['lower', 'mean', 'upper', 'MIT']   
-for case in caseID:
+for case_i, case in enumerate(caseID):
     if case == 'mean':
         caseLabel = 'Reference'
     else:
         caseLabel = case
     
-   
+    COVID = PODA_Model['Data_for_Mobility_Projection_'+case]
+    COVID = COVID[COVID['State Name']== 'Michigan']
+    
     data_used = PODA_Model['Google_Apple_Mobility_Projection_'+case].reset_index()
     
     data_used = data_used[(data_used['date']> pd.to_datetime(start_Date))]
@@ -134,20 +146,30 @@ for case in caseID:
     
     fig1 = plt.figure(figsize=(6, 5))
     ax1 = fig1.add_subplot(1, 1, 1)
-    ax1.plot(x.index, x['Google Fuel Demand Predict'], '-', label='Google Mobility (Predicted')
-    ax1.plot(x.index, x['Apple Fuel Demand Predict'], '--g', label='Apple Mobility (Predicted')
-    ax1.plot(fuel_Demand_EIA.index - pd.DateOffset(days=day_Shift), fuel_Demand_EIA['Gasoline'], '--s', label='EIA Weekly Fuel Demand')
+    ax1.plot(x.index, x['Google Fuel Demand Predict'], '-', 
+             label='Google Mobility (Predicted')
+    ax1.plot(x.index, x['Apple Fuel Demand Predict'], '--g', 
+             label='Apple Mobility (Predicted')
+    ax1.plot(fuel_Demand_EIA.index - pd.DateOffset(days=day_Shift), 
+             fuel_Demand_EIA['Gasoline'], 
+             '--s', label='EIA Weekly Fuel Demand')
     ax1.set_xlabel('Date')
     ax1.set_ylabel('Daily Motor Gasoline Demand (thousand BPD)')
-    ax1.set_ylim(4000, 10000)
+    
+    # ax1.set_ylim(4000, 10000)
     ax1.set_title('Fuel Demand: '+model_mark+case+' YYG:'+YYG_projection_Date + ' MLmodel:' +ML_Model+isopen)
     ax1.legend()
         
        
+        
+    ax2.plot(COVID.index, COVID['US Daily Confirmed'], Line_Style[case_i], label=case)
+    
+    ax3.plot(COVID.index, COVID['US Daily Death'],  Line_Style[case_i], label=case)
     # if (case == 'mean') & (isopen ==''):
     #     data_save.to_excel('C:/Users/hexx/Box Sync/Energy-COVID-19/Data for Website/Mobility_State_'+YYG_projection_Date+case+'.xlsx')
         
-
+ax2.legend()
+ax3.legend()
 np.save(("./PODA_Model_"+today+".npy"), PODA_Model)
 
 createFolder('./PODA_Model')
